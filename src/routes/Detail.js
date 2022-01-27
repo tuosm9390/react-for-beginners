@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import style from "../Detail.module.css";
-
+import { Link } from "react-router-dom";
 
 function Detail() {
   const [loading, setLoading] = useState(true);
@@ -26,17 +26,18 @@ function Detail() {
   return (
     <div className={style.contents}>
       {loading ? <h1>Loading...</h1> :
-        (
-          <div>
-            <img src={movie.medium_cover_image} alt="title" />
-            <h1>{movie.title_long}</h1>
-            <h3 className={style.discription}>{movie.description_intro}</h3>
-            <p>평점 : {movie.rating + (" 점")}</p>
-            <p>러닝타임 : {movie.runtime + (" 분")}</p>
-            <p>장르 : {movie.genres.map((g) => (g + " "))}</p>
-            <p>다운로드 수 : {movie.download_count + (" 회")}</p>
-          </div>
-        )}
+        <div>
+          <img src={movie.large_cover_image} alt="title" />
+          <h1>{movie.title_long}</h1>
+          <p>평점 : {movie.rating + (" 점")}</p>
+          <p>러닝타임 : {movie.runtime + (" 분")}</p>
+          <p>장르 : {movie.genres.map((g) => (g + " "))}</p>
+          <p>다운로드 수 : {movie.download_count + (" 회")}</p>
+          <Link to={'/'}>
+            <button>back</button>
+          </Link>
+        </div>
+      }
     </div>
   )
 }
