@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import style from "../Detail.module.css";
+import style from "./Detail.module.css";
 import { Link } from "react-router-dom";
+import { IoStar, IoFilmOutline, IoFileTraySharp, IoCloudDownloadOutline, IoBookOutline } from "react-icons/io5";
 
 function Detail() {
   const [loading, setLoading] = useState(true);
@@ -16,25 +17,39 @@ function Detail() {
     setMovie(json.data.movie);
     setLoading(false);
   };
-  console.log(movie);
 
   useEffect(() => {
     getMovie();
   }, []);
 
+  console.log(movie);
   // 상세정보 보여주기
   return (
-    <div className={style.contents}>
+    <div className={style.wrapper}>
       {loading ? <h1>Loading...</h1> :
-        <div>
+        <div className={style.detail}>
           <img src={movie.large_cover_image} alt="title" />
           <h1>{movie.title_long}</h1>
-          <p>평점 : {movie.rating + (" 점")}</p>
-          <p>러닝타임 : {movie.runtime + (" 분")}</p>
-          <p>장르 : {movie.genres.map((g) => (g + " "))}</p>
-          <p>다운로드 수 : {movie.download_count + (" 회")}</p>
-          <Link to={'/'}>
-            <button>back</button>
+          <ul>
+            <li>
+              <p><IoStar />  평점 : {movie.rating + (" 점")}</p>
+            </li>
+            <li>
+              <p><IoFilmOutline /> 러닝타임 : {movie.runtime + (" 분")}</p>
+            </li>
+            <li>
+              <p><IoFileTraySharp /> 장르 : {movie.genres.map((g) => (g + " "))}</p>
+            </li>
+            <li>
+              <p><IoCloudDownloadOutline /> 다운로드 수 : {movie.download_count + (" 회")}</p>
+            </li>
+            <li>
+              <p><IoBookOutline /> 줄거리</p>
+              <p className={style.description}>{movie.description_full}</p>
+            </li>
+          </ul>
+          <Link to={'/'} className={style.btn}>
+            <span>back</span>
           </Link>
         </div>
       }
